@@ -1,0 +1,15 @@
+name: Lab08
+on:
+  push:
+jobs:
+  Docker:
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v3
+        - name: BUILD
+          shell: bash
+          run: git submodule update --init --recursive && docker build -t builder .
+        - name: RUN
+          shell: bash
+          run: docker run --name=taskdock -v "$(pwd)/logs/:/home/logs/" builder && exit
+            
